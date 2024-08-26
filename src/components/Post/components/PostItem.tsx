@@ -24,6 +24,7 @@ interface Props {
 
 function PostItem({ post, isCommentDetail = false, fanpage }: Props) {
   const { user_id } = useParams()
+  const [showDiaLogFeatureNotAllow, setShowDiaLogFeatureNotAllow] = useState<boolean>(false)
   const [isEditPrivary, setIsEditPrivary] = useState<boolean>(false)
   const [isDeletePost, setIsDeletePost] = useState<boolean>(false)
   const [editComment, setEditComment] = useState<PostComment | null>(null)
@@ -94,6 +95,14 @@ function PostItem({ post, isCommentDetail = false, fanpage }: Props) {
 
   return (
     <>
+      <Dialog
+        isVisible={showDiaLogFeatureNotAllow}
+        onClose={() => setShowDiaLogFeatureNotAllow(false)}
+        type='notification'
+        title='Chức năng chưa sẳn có!'
+        description='Chức năng sẽ được chúng tôi phát triển trong tương lai!'
+        // callback={() => handleFeatureNotAllow()}
+      />
       <Modal isVisible={isEditPrivary} onClose={() => setIsEditPrivary(false)}>
         <div className='mt-12 p-4'>
           <h1 className='text-center text-xl'>Chọn đối tượng</h1>
@@ -116,7 +125,7 @@ function PostItem({ post, isCommentDetail = false, fanpage }: Props) {
                     />
                     <div>
                       <div>Công khai</div>
-                      <p>Bất kỳ ai ở trên facebook</p>
+                      <p>Bất kỳ ai ở trên devbook</p>
                     </div>
                   </div>
                   <IonIcon
@@ -143,7 +152,7 @@ function PostItem({ post, isCommentDetail = false, fanpage }: Props) {
                     />
                     <div>
                       <div>Bạn bè</div>
-                      <p>Bạn bè của bạn trên facebook</p>
+                      <p>Bạn bè của bạn trên devbook</p>
                     </div>
                   </div>
                   <IonIcon
@@ -236,21 +245,27 @@ function PostItem({ post, isCommentDetail = false, fanpage }: Props) {
               uk-dropdown='pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: hover'
             >
               <nav>
-                <a className='cursor-pointer'>
-                  <IonIcon className='shrink-0 text-xl' icon='document-text-outline'></IonIcon>
-                  Chỉnh sửa bài viết
-                </a>
-                <a className='cursor-pointer'>
-                  <IonIcon className='shrink-0 text-xl' icon='code-slash-outline' /> Ghim bài viết
-                </a>
-                <a onClick={() => setIsEditPrivary(true)} className='flex w-full cursor-pointer items-center gap-2 '>
-                  <IonIcon className='shrink-0 text-xl' icon='settings-outline'></IonIcon>
-                  Chỉnh sửa đối tượng
-                </a>
-                <a className='cursor-pointer'>
+                {post.user_id === profile?.user_id && (
+                  <>
+                    <a onClick={() => setShowDiaLogFeatureNotAllow(true)} className='cursor-pointer'>
+                      <IonIcon className='shrink-0 text-xl' icon='document-text-outline'></IonIcon>
+                      Chỉnh sửa bài viết
+                    </a>
+                    <a onClick={() => setShowDiaLogFeatureNotAllow(true)} className='cursor-pointer'>
+                      <IonIcon className='shrink-0 text-xl' icon='code-slash-outline' /> Ghim bài viết
+                    </a>
+                    <a
+                      onClick={() => setIsEditPrivary(true)}
+                      className='flex w-full cursor-pointer items-center gap-2 '
+                    >
+                      <IonIcon className='shrink-0 text-xl' icon='settings-outline'></IonIcon>
+                      Chỉnh sửa đối tượng
+                    </a>
+                  </>
+                )}
+                <a onClick={() => setShowDiaLogFeatureNotAllow(true)} className='cursor-pointer'>
                   <IonIcon className='shrink-0 text-xl' icon='share-outline' /> Chia sẻ bài viết
                 </a>
-                <hr />
                 {profile && profile.user_id === post.user_id && (
                   <a
                     onClick={() => setIsDeletePost(true)}

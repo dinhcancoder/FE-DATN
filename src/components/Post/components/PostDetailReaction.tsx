@@ -20,7 +20,7 @@ function PostDetailReaction({ reactions, reactionIcons }: Props) {
 
   return (
     <div className='relative h-[450px] overflow-y-scroll px-5' style={{ scrollbarWidth: 'thin' }}>
-      <ul className='sticky left-0 top-0 flex w-full justify-center justify-between gap-8 bg-white py-4'>
+      <ul className='sticky left-0 top-0 grid w-full grid-cols-5 gap-x-8 gap-y-2 bg-white py-4'>
         <li>
           <a
             onClick={() => setSelectedReaction('all')}
@@ -29,6 +29,16 @@ function PostDetailReaction({ reactions, reactionIcons }: Props) {
             })}
           >
             Tất cả ({reactions.length})
+          </a>
+        </li>
+        <li>
+          <a
+            onClick={() => setSelectedReaction('like')}
+            className={classNames('flex cursor-pointer items-center gap-2 py-2', {
+              'border-b-[3px] border-blue-500': selectedReaction === 'like'
+            })}
+          >
+            <img className='w-5' src={reactionIcons['like']} alt='' /> Thích {countReactionType('like')}
           </a>
         </li>
         <li>

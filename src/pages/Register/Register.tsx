@@ -149,7 +149,7 @@ function Register() {
               </div>
               <div className='col-span-2'>
                 <label className='inline-flex items-center' id='rememberme'>
-                  <input type='checkbox' id='accept-terms' className='!rounded-md accent-red-800' />
+                  <input checked type='checkbox' id='accept-terms' className='!rounded-md accent-red-800' />
                   <span className='ml-2'>
                     Bạn đồng ý với chúng tôi {''}
                     <a href='#' className='text-blue-700 hover:underline'>
